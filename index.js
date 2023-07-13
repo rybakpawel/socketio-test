@@ -20,7 +20,10 @@ let numUsers = 0;
 io.on("connection", (socket) => {
     let addedUser = false;
 
+    console.log("Połączono")
+    
     socket.on("new message", (data) => {
+        console.log("Nowa wiadomość")
         socket.broadcast.emit("new message", {
             username: socket.username,
             message: data,
