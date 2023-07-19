@@ -22,7 +22,7 @@ io.on("connection", (socket) => {
 
     console.log("Połączono")
     
-    socket.on("new message", (data) => {
+    socket.on("onmessage", (data) => {
         console.log("Nowa wiadomość")
         socket.broadcast.emit("message-received", {
             username: socket.username,
