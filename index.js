@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
     
     socket.on("send-message", (data) => {
         console.log("Nowa wiadomość")
-        socket.broadcast.emit("message-received", {
+        socket.broadcast.emit("onmessage", {
             username: socket.username,
             message: data,
         });
