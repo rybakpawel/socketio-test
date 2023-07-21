@@ -21,6 +21,8 @@ io.on("connection", (socket) => {
     let addedUser = false;
 
     console.log("Połączono")
+
+    socket.emit("hello", "world")
     
     socket.on("send-message", (data) => {
         console.log("Nowa wiadomość")
