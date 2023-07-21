@@ -27,6 +27,7 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("receive-message", {
             message: "Wiadomość odebrana",
         });
+        console.log("Po Receive")
     });
 
     socket.on("add user", (username) => {
