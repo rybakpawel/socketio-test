@@ -22,7 +22,7 @@ io.on("connection", (socket) => {
     
     socket.on("send-message", (data) => {
         console.log("Nowa wiadomość")
-        socket.broadcast.emit("receive-message", {
+        socket.emit("receive-message", {
             message: "Wiadomość odebrana",
         });
         console.log("Po Receive")
