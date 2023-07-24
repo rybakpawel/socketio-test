@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, "public")));
 io.on("connection", (socket) => {
     
     socket.on("send-message", (data) => {
-        io.emit("receive-message", {
+        io.broadcast.emit("receive-message", {
             message: "Wiadomość odebrana",
         });
     });
