@@ -16,15 +16,10 @@ server.listen(port, () => {
 app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connection", (socket) => {
-    console.log("Połączono")
-
-    socket.emit("hello", "world")
     
     socket.on("send-message", (data) => {
-        console.log("Nowa wiadomość")
-        socket.emit("receive-message", {
+        io.emit("receive-message", {
             message: "Wiadomość odebrana",
         });
-        console.log("Po Receive")
     });
 });
