@@ -12,11 +12,11 @@ server.listen(port, () => {
     console.log("Server listening at port ", port);
 });
 
-io.on("connection", (socket) => {
+io.on("connection", socket => {
     
-    socket.on("send-message", (data) => {
+    socket.on("send-message", message => {
         socket.broadcast.emit("receive-message", {
-            message: "Wiadomość odebrana",
+            message
         });
     });
 });
