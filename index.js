@@ -15,7 +15,7 @@ server.listen(port, () => {
 io.on("connection", (socket) => {
     
     socket.on("send-message", (data) => {
-        io.broadcast.emit("receive-message", {
+        socket.broadcast.emit("receive-message", {
             message: "Wiadomość odebrana",
         });
     });
