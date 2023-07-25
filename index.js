@@ -16,7 +16,7 @@ io.on("connection", socket => {
     
     socket.on("send-message", message => {
         socket.broadcast.emit("receive-message", {
-            message
+            message: message
         });
     });
 });
