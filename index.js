@@ -15,6 +15,7 @@ server.listen(port, () => {
 io.on("connection", socket => {
     
     socket.on("send-message", data => {
+        console.log(data)
         socket.broadcast.emit("receive-message", {
             message: data.message,
             chatGroupId: data.chatGroupId
