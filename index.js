@@ -14,9 +14,10 @@ server.listen(port, () => {
 
 io.on("connection", socket => {
     
-    socket.on("send-message", message => {
+    socket.on("send-message", data => {
         socket.broadcast.emit("receive-message", {
-            message: message
+            message: data.message,
+            chatGroupId: data.chatGroupId
         });
     });
 });
