@@ -13,10 +13,11 @@ server.listen(port, () => {
 });
 
 io.on("connection", socket => {
-    socket.join(socket.handshake.query.userId)
+    console.log(socket.handshake.query.rooms)
+    // socket.join(socket.handshake.query.userId)
     
     socket.on("send-message", data => {
-        socket.to(data.chatGroupId).broadcast.emit("receive-message", {
+        socket.broadcast.to(data.chatGroupId).emit("receive-message", {
             message: data.message,
             chatGroupId: data.chatGroupId
         });
