@@ -22,7 +22,8 @@ io.on("connection", socket => {
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
-        socket.to(obj.chatGroupId).broadcast.emit("receive-message", {
+        console.log(obj.chatGroupId)
+        socket.broadcast.to(obj.chatGroupId).emit("receive-message", {
             message: obj.message,
             chatGroupId: obj.chatGroupId
         });
