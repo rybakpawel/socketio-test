@@ -13,19 +13,17 @@ server.listen(port, () => {
 });
 
 io.on("connection", socket => {
-    // socket.on('join-initial-groups', (room, name) => {
-    //     socket.join(room)
-    //     rooms[room].users[socket.id] = name
-    //     socket.to(room).broadcast.emit('user-connected', name)
-    // })
+    socket.on('join-initial-groups', data => {
+        const obj = JSON.parse(data);
+        console.log(obj);
+        // socket.join(obj.Id)
+    })
     
     socket.on("send-message", data => {
-        console.log(data);
         const obj = JSON.parse(data);
-        console.log(obj)
-        socket.broadcast.to(data.chatGroupId).emit("receive-message", {
-            message: data.message,
-            chatGroupId: data.chatGroupId
+        socket.broadcast.to(obj.chatGroupId).emit("receive-message", {
+            message: obj.message,
+            chatGroupId: obj.chatGroupId
         });
     });
 });
