@@ -16,17 +16,15 @@ io.on("connection", socket => {
     socket.on('join-initial-groups', data => {
         const dataArray = JSON.parse(data);
         dataArray.forEach(data => {
-            console.log(data.Id)
             socket.join(data.Id)
         });
     })
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
-        console.log(obj.chatGroupId)
-        socket.broadcast.to(obj.chatGroupId).emit("receive-message", {
-            message: obj.message,
-            chatGroupId: obj.chatGroupId
+        socket.broadcast.to(obj.ChatGroupId).emit("receive-message", {
+            message: obj.Message,
+            chatGroupId: obj.ChatGroupId
         });
     });
 });
