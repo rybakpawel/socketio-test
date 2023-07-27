@@ -16,6 +16,7 @@ io.on("connection", socket => {
     socket.on('join-initial-groups', data => {
         const dataArray = JSON.parse(data);
         dataArray.forEach(data => {
+            console.log(data.Id)
             socket.join(data.Id)
         });
     })
