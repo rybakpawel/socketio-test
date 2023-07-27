@@ -14,9 +14,10 @@ server.listen(port, () => {
 
 io.on("connection", socket => {
     socket.on('join-initial-groups', data => {
-        const obj = JSON.parse(data);
-        console.log(obj);
-        // socket.join(obj.Id)
+        const dataArray = JSON.parse(data);
+        dataArray.forEach(data => {
+            socket.join(data.Id)
+        });
     })
     
     socket.on("send-message", data => {
