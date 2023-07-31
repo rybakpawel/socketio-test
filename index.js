@@ -22,6 +22,7 @@ io.on("connection", socket => {
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
-        socket.broadcast.to(obj.ChatGroupId).emit("receive-message", data);
+        console.log(obj)
+        socket.broadcast.to(obj.ChatMessage.ChatGroupId).emit("receive-message", data);
     });
 });
