@@ -21,9 +21,7 @@ io.on("connection", socket => {
     });
 
     socket.on("join-group", data => {
-        console.log(data)
         const obj = JSON.parse(data);
-        console.log(obj)
         socket.join(obj.ChatMessage.ChatGroupId);
     });
     
@@ -31,10 +29,8 @@ io.on("connection", socket => {
         const obj = JSON.parse(data);
 
         if (obj.NewGroup) {
-            console.log(obj.NewGroup);
             socket.join(obj.ChatMessage.ChatGroupId);
-            console.log(data);
-            socket.broadcast.emit("join-new-group", data);
+            socket.broadcast.emit("receive-new-group-message", data);
         }
         socket.broadcast.to(obj.ChatMessage.ChatGroupId).emit("receive-message", data);
     });
