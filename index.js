@@ -22,16 +22,16 @@ io.on("connection", socket => {
 
     socket.on("join-group", data => {
         const obj = JSON.parse(data);
-        socket.join(obj.ChatMessage.ChatGroupId);
+        socket.join(obj.ChatMessage.ChatId);
     });
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
 
         if (obj.NewGroup) {
-            socket.join(obj.ChatMessage.ChatGroupId);
+            socket.join(obj.ChatMessage.ChatId);
             socket.broadcast.emit("receive-new-group-message", data);
         }
-        socket.broadcast.to(obj.ChatMessage.ChatGroupId).emit("receive-message", data);
+        socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
     });
 });
