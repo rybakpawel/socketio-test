@@ -22,13 +22,12 @@ io.on("connection", socket => {
 
     socket.on("join-chat", data => {
         const obj = JSON.parse(data);
-        console.log(obj)
         socket.join(obj.ChatMessage.ChatId);
     });
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
-        console.log(obj)
+
         if (obj.NewChat) {
             socket.join(obj.ChatMessage.ChatId);
             socket.broadcast.emit("receive-new-chat-message", data);
