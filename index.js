@@ -14,9 +14,9 @@ server.listen(port, () => {
 
 io.on("connection", socket => {
     socket.on('join-initial-chats', data => {
-        const dataArray = JSON.parse(data);
-        dataArray.forEach(data => {
-            socket.join(data.Id);
+        const chatIds = JSON.parse(data);
+        chatIds.forEach(id => {
+            socket.join(id);
         });
     });
 
