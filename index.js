@@ -26,8 +26,7 @@ io.on("connection", socket => {
     });
 
     socket.on("leave-chat", data => {
-        console.log(data)
-        socket.leave(data.ChatId);
+        socket.leave(data);
     });
     
     socket.on("send-message", data => {
@@ -42,7 +41,7 @@ io.on("connection", socket => {
 
     socket.on("remove-user-from-group", data => {
         const obj = JSON.parse(data);
-        console.log(obj)
+        
         socket.to(obj.ChatId).emit("receive-remove-user-from-group", data);
     });
 });
