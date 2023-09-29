@@ -34,4 +34,7 @@ io.on("connection", socket => {
         }
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
     });
+
+    socket.on("remove-user-from-group", data => {
+        console.log(data)
 });
