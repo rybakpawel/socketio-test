@@ -26,6 +26,7 @@ io.on("connection", socket => {
     });
 
     socket.on("leave-chat", data => {
+        console.log(data);
         socket.leave(data);
     });
     
