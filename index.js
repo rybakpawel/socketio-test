@@ -27,6 +27,8 @@ io.on("connection", socket => {
 
     socket.on("leave-chat", data => {
         console.log(data);
+        const obj = JSON.parse(data);
+        console.log(obj);
         socket.leave(data);
     });
     
