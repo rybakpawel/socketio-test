@@ -21,13 +21,13 @@ io.on("connection", socket => {
     });
 
     socket.on("join-chat", data => {
-        const obj = JSON.parse(data);
-        socket.join(obj.ChatMessage.ChatId);
+        const chatId = JSON.parse(data);
+        socket.join(chatId);
     });
 
     socket.on("leave-chat", data => {
-        const obj = JSON.parse(data);
-        socket.leave(obj);
+        const chatId = JSON.parse(data);
+        socket.leave(chatId);
     });
     
     socket.on("send-message", data => {
