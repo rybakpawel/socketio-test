@@ -40,6 +40,10 @@ io.on("connection", socket => {
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
     });
 
+    socket.on("add-user-to-group", data => {
+        socket.broadcast.emit("receive-add-user-to-group", data);
+    });
+
     socket.on("remove-user-from-group", data => {
         const obj = JSON.parse(data);
         
