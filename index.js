@@ -49,4 +49,14 @@ io.on("connection", socket => {
         
         socket.to(obj.ChatId).emit("receive-remove-user-from-group", data);
     });
+
+    socket.on("user-connection", data => {
+        const obj = JSON.parse(data);
+        
+        const sockets = await io.in(obj.ChatId).fetchSockets();
+        const socketsAll = await io.local.fetchSockets();
+
+        console.log(sockets);
+        console.log(socketsAll);
+    });
 });
