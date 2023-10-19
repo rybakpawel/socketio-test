@@ -50,8 +50,10 @@ io.on("connection", socket => {
         socket.to(obj.ChatId).emit("receive-remove-user-from-group", data);
     });
 
-    socket.on("user-connection", data => {
+    socket.on("user-connection", async (data) => {
         const obj = JSON.parse(data);
+        
+        console.log(obj);
         
         const sockets = await io.in(obj.ChatId).fetchSockets();
         const socketsAll = await io.local.fetchSockets();
