@@ -8,16 +8,25 @@ const io = require("socket.io")(server, {
 });
 const port = 5000;
 
+
 server.listen(port, () => {
     console.log("Server listening at port ", port);
 });
 
+const connectedUsers = new Set();
+
 io.on("connection", socket => {
+    connectedUsers.add(socket.id);
+
+    io.emit('receive-connected-users', Array.from(connectedUsers));
+    
     socket.on('disconnect', () => {
         const rooms = Object.keys(socket.rooms);
         rooms.forEach((room) => {
             socket.leave(room);
         });
+        connectedUsers.delete(socket.id);
+        io.emit('receive-connected-users', Array.from(connectedUsers));
     });
     
     socket.on('join-initial-chats', data => {
@@ -57,16 +66,15 @@ io.on("connection", socket => {
         socket.to(obj.ChatId).emit("receive-remove-user-from-group", data);
     });
 
-    socket.on("user-connection", async (data) => {
-        console.log(data);
-        const obj = JSON.parse(data);
+    // socket.on("user-connection", async (data) => {
+    //     const obj = JSON.parse(data);
         
-        console.log(obj);
+    //     console.log(obj);
         
-        const sockets = await io.in(obj.ChatId).fetchSockets();
-        const socketsAll = await io.local.fetchSockets();
+    //     const sockets = await io.in(obj.ChatId).fetchSockets();
+    //     const socketsAll = await io.local.fetchSockets();
 
-        console.log(sockets);
-        console.log(socketsAll);
-    });
+    //     console.log(sockets);
+    //     console.log(socketsAll);
+    // });
 });
