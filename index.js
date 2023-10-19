@@ -13,6 +13,13 @@ server.listen(port, () => {
 });
 
 io.on("connection", socket => {
+    socket.on('disconnect', () => {
+        const rooms = Object.keys(socket.rooms);
+        rooms.forEach((room) => {
+            socket.leave(room);
+        });
+    });
+    
     socket.on('join-initial-chats', data => {
         const chatIds = JSON.parse(data);
         chatIds.forEach(id => {
