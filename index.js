@@ -18,7 +18,8 @@ const connectedUsers = new Set();
 io.on("connection", socket => {
     connectedUsers.add(socket.id);
 
-    io.emit('receive-connected-users', Array.from(connectedUsers));
+    const data = JSON.stringify(Array.from(connectedUsers));
+    io.emit('receive-connected-users', data);
     
     socket.on('disconnect', () => {
         const rooms = Object.keys(socket.rooms);
@@ -26,7 +27,8 @@ io.on("connection", socket => {
             socket.leave(room);
         });
         connectedUsers.delete(socket.id);
-        io.emit('receive-connected-users', Array.from(connectedUsers));
+        const data = JSON.stringify(Array.from(connectedUsers));
+        io.emit('receive-connected-users', data);
     });
     
     socket.on('join-initial-chats', data => {
