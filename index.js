@@ -51,6 +51,7 @@ io.on("connection", socket => {
     });
 
     socket.on("user-connection", async (data) => {
+        console.log(data);
         const obj = JSON.parse(data);
         
         console.log(obj);
