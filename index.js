@@ -16,6 +16,7 @@ server.listen(port, () => {
 const connectedUsers = new Set();
 
 io.on("connection", socket => {
+    console.log(socket.handshake.query['userId']);
     connectedUsers.add(socket.id);
 
     const data = JSON.stringify(Array.from(connectedUsers));
