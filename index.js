@@ -16,7 +16,8 @@ server.listen(port, () => {
 const connectedUsers = new Set();
 
 io.on("connection", socket => {
-    connectedUsers.add(socket.handshake.query['userId']);
+    const userId = socket.handshake.query['userId'];
+    connectedUsers.add(userId);
     const data = JSON.stringify(Array.from(connectedUsers));
     
     io.emit('receive-connected-users', data);
@@ -26,7 +27,7 @@ io.on("connection", socket => {
         rooms.forEach((room) => {
             socket.leave(room);
         });
-        connectedUsers.delete(socket.id);
+        connectedUsers.delete(userId);
         const data = JSON.stringify(Array.from(connectedUsers));
         io.emit('receive-connected-users', data);
     });
