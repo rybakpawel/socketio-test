@@ -50,6 +50,7 @@ io.on("connection", socket => {
     });
     
     socket.on("send-message", data => {
+        console.log(data)
         const obj = JSON.parse(data);
         console.log(obj);
 
@@ -57,7 +58,7 @@ io.on("connection", socket => {
             socket.join(obj.ChatMessage.ChatId);
             socket.broadcast.emit("receive-new-chat-message", data);
         }
-        console.log(obj.ChatMessage.ChatId);
+    
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
     });
 
