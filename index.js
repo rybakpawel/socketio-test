@@ -40,8 +40,9 @@ io.on("connection", socket => {
     });
 
     socket.on("join-chat", data => {
-        const chatId = JSON.parse(data);
-        socket.join(chatId);
+        const obj = JSON.parse(data);
+        socket.join(obj.ChatId);
+        socket.broadcast.to(obj.ChatId).emit("receive-group-notification", data);
     });
 
     socket.on("leave-chat", data => {
@@ -50,14 +51,7 @@ io.on("connection", socket => {
     });
     
     socket.on("send-message", data => {
-        console.log(data)
         const obj = JSON.parse(data);
-        console.log(obj);
-
-        if (obj.NewChat) {
-            socket.join(obj.ChatMessage.ChatId);
-            socket.broadcast.emit("receive-new-chat-message", data);
-        }
     
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
     });
