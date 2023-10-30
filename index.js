@@ -51,11 +51,13 @@ io.on("connection", socket => {
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
+        console.log(obj);
 
         if (obj.NewChat) {
             socket.join(obj.ChatMessage.ChatId);
             socket.broadcast.emit("receive-new-chat-message", data);
         }
+        console.log(obj.ChatMessage.ChatId);
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
     });
 
