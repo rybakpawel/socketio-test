@@ -41,7 +41,7 @@ io.on("connection", socket => {
 
     socket.on("join-chat", data => {
         const obj = JSON.parse(data);
-        socket.join(obj);
+        socket.join(obj.ChatId);
         console.log("join-chat: " + obj);
         if (obj.NotificationMessage) {
             socket.to(obj.ChatId).emit("receive-group-notification", data);
@@ -55,13 +55,13 @@ io.on("connection", socket => {
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
-        console.log("send-message: " + obj.ChatMessage.ChatId);
+
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
     });
 
     socket.on("send-new-chat-message", data => {
         const obj = JSON.parse(data);
-        console.log("send-new-chat-message: " + obj.ChatMessage.ChatId);
+        
         socket.join(obj.ChatMessage.ChatId);
         socket.broadcast.emit("receive-new-chat-message", data);
     });
