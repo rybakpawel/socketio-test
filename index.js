@@ -49,8 +49,12 @@ io.on("connection", socket => {
     });
 
     socket.on("leave-chat", data => {
-        const chatId = JSON.parse(data);
+        const obj = JSON.parse(data);
         socket.leave(chatId);
+
+        if (obj.NotificationMessage) {
+            io.to(obj.ChatId).emit("receive-group-notification", data);
+        };
     });
     
     socket.on("send-message", data => {
@@ -73,6 +77,6 @@ io.on("connection", socket => {
     socket.on("remove-user-from-group", data => {
         const obj = JSON.parse(data);
         
-        socket.to(obj.ChatId).emit("receive-remove-user-from-group", data);
+        io.to(obj.ChatId).emit("receive-remove-user-from-group", data);
     });
 });
