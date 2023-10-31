@@ -50,7 +50,7 @@ io.on("connection", socket => {
 
     socket.on("leave-chat", data => {
         const obj = JSON.parse(data);
-        socket.leave(chatId);
+        socket.leave(obj.ChatId);
 
         if (obj.NotificationMessage) {
             io.to(obj.ChatId).emit("receive-group-notification", data);
