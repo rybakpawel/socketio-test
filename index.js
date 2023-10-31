@@ -42,10 +42,9 @@ io.on("connection", socket => {
     socket.on("join-chat", data => {
         const obj = JSON.parse(data);
         socket.join(obj.ChatId);
-        console.log(obj.ChatId);
-        console.log("join-chat: " + obj);
+        
         if (obj.NotificationMessage) {
-            socket.to(obj.ChatId).emit("receive-group-notification", data);
+            io.to(obj.ChatId).emit("receive-group-notification", data);
         };
     });
 
