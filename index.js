@@ -42,19 +42,11 @@ io.on("connection", socket => {
     socket.on("join-chat", data => {
         const obj = JSON.parse(data);
         socket.join(obj.ChatId);
-        
-        if (obj.NotificationMessage) {
-            io.to(obj.ChatId).emit("receive-group-notification", data);
-        };
     });
 
     socket.on("leave-chat", data => {
         const obj = JSON.parse(data);
         socket.leave(obj.ChatId);
-
-        if (obj.NotificationMessage) {
-            io.to(obj.ChatId).emit("receive-group-notification", data);
-        };
     });
     
     socket.on("send-message", data => {
@@ -72,11 +64,13 @@ io.on("connection", socket => {
 
     socket.on("add-user-to-group", data => {
         socket.broadcast.emit("receive-add-user-to-group", data);
+        io.to(obj.ChatId).emit("receive-group-notification", data);
     });
 
     socket.on("remove-user-from-group", data => {
         const obj = JSON.parse(data);
         
         io.to(obj.ChatId).emit("receive-remove-user-from-group", data);
+        io.to(obj.ChatId).emit("receive-group-notification", data);
     });
 });
