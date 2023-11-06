@@ -63,6 +63,8 @@ io.on("connection", socket => {
     });
 
     socket.on("add-user-to-group", data => {
+        const obj = JSON.parse(data);
+        
         socket.broadcast.emit("receive-add-user-to-group", data);
         io.to(obj.ChatId).emit("receive-group-notification", data);
     });
