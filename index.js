@@ -51,7 +51,7 @@ io.on("connection", socket => {
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
-
+        console.log(obj);
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
     });
 
