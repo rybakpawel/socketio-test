@@ -51,9 +51,9 @@ io.on("connection", socket => {
     
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
-        console.log("Użytkownik " + obj.UserName + " (Id: " + obj.CreatedByUserId + ") wysłał wiadomość o treści: `" + obj.Content + "` do czatu o Id: " + obj.ChatId);
-        console.log(connectedUsers);
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
+
+        console.log("Użytkownik " + obj.UserName + " (Id: " + obj.CreatedByUserId + ") wysłał wiadomość o treści: `" + obj.Content + "` do czatu o Id: " + obj.ChatId);
     });
 
     socket.on("send-new-chat-message", data => {
