@@ -19,7 +19,7 @@ io.on("connection", socket => {
     const userId = socket.handshake.query['userId'];
     connectedUsers.add(userId);
     const data = JSON.stringify(Array.from(connectedUsers));
-    
+    console.log("Użytkownik " + userId + " został zalogowany.");
     io.emit('receive-connected-users', data);
     
     socket.on('disconnect', () => {
@@ -29,6 +29,7 @@ io.on("connection", socket => {
         });
         connectedUsers.delete(userId);
         const data = JSON.stringify(Array.from(connectedUsers));
+        console.log("Użytkownik " + userId + " został wylogowany.");
         io.emit('receive-connected-users', data);
     });
     
@@ -52,7 +53,7 @@ io.on("connection", socket => {
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
-
+        console.log("Zalogowani użytkownicy: " + connectedUsers);
         console.log("Użytkownik " + obj.ChatMessage.UserName + " (Id: " + obj.ChatMessage.CreatedByUserId + ") wysłał wiadomość o treści: `" + obj.ChatMessage.Content + "` do czatu o Id: " + obj.ChatMessage.ChatId);
     });
 
