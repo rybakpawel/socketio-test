@@ -53,7 +53,8 @@ io.on("connection", socket => {
     socket.on("send-message", data => {
         const obj = JSON.parse(data);
         socket.broadcast.to(obj.ChatMessage.ChatId).emit("receive-message", data);
-        console.log("Zalogowani użytkownicy: " + connectedUsers);
+    
+        console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
         console.log("Użytkownik " + obj.ChatMessage.UserName + " (Id: " + obj.ChatMessage.CreatedByUserId + ") wysłał wiadomość o treści: `" + obj.ChatMessage.Content + "` do czatu o Id: " + obj.ChatMessage.ChatId);
     });
 
