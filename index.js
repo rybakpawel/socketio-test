@@ -20,6 +20,7 @@ io.on("connection", socket => {
     connectedUsers.add(userId);
     const data = JSON.stringify(Array.from(connectedUsers));
     console.log("Użytkownik " + userId + " został zalogowany.");
+    console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
     io.emit('receive-connected-users', data);
     
     socket.on('disconnect', () => {
