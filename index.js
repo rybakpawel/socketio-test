@@ -64,6 +64,9 @@ io.on("connection", socket => {
         
         socket.join(obj.ChatMessage.ChatId);
         socket.broadcast.emit("receive-new-chat-message", data);
+
+        console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
+        console.log("Użytkownik " + obj.ChatMessage.UserName + " (Id: " + obj.ChatMessage.CreatedByUserId + ") wysłał wiadomość o treści: `" + obj.ChatMessage.Content + "` do czatu o Id: " + obj.ChatMessage.ChatId);
     });
 
     socket.on("add-user-to-group", data => {
