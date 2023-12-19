@@ -82,4 +82,12 @@ io.on("connection", socket => {
         io.to(obj.ChatId).emit("receive-remove-user-from-group", data);
         io.to(obj.ChatId).emit("receive-group-notification", data);
     });
+
+    socket.on("viewed-last-message", data => {
+        const obj = JSON.parse(data);
+
+        socket.broadcast.to(obj.ViewedLastMessage.ChatId).emit("receive-viewed-last-message", data);
+
+        console.log("Użytkownik " + obj.ViewedLastMessage.UserId + " odczytał ostatnią wiadomość w czacie " + obj.ViewedLastMessage.UserId);
+    }
 });
