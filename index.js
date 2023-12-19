@@ -89,5 +89,5 @@ io.on("connection", socket => {
         socket.broadcast.to(obj.ViewedLastMessage.ChatId).emit("receive-viewed-last-message", data);
 
         console.log("Użytkownik " + obj.ViewedLastMessage.UserId + " odczytał ostatnią wiadomość w czacie " + obj.ViewedLastMessage.UserId);
-    }
+    });
 });
