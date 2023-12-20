@@ -85,7 +85,7 @@ io.on("connection", socket => {
 
     socket.on("viewed-last-message", data => {
         const obj = JSON.parse(data);
-
+        console.log(obj);
         socket.broadcast.to(obj.ViewedLastMessage.ChatId).emit("receive-viewed-last-message", data);
 
         console.log("Użytkownik " + obj.ViewedLastMessage.UserId + " odczytał ostatnią wiadomość w czacie " + obj.ViewedLastMessage.UserId);
