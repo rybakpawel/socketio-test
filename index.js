@@ -23,7 +23,8 @@ io.on("connection", socket => {
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
-    io.emit('receive-connected-users', data);
+    socket.broadcast.emit('receive-connected-users', data);
+    // io.emit('receive-connected-users', data);
     
     socket.on('disconnect', () => {
         const rooms = Object.keys(socket.rooms);
@@ -35,8 +36,9 @@ io.on("connection", socket => {
         const data = JSON.stringify(Array.from(connectedUsers));
         
         console.log("Użytkownik " + userId + " został wylogowany.");
-        
-        io.emit('receive-connected-users', data);
+
+        socket.broadcast.emit('receive-connected-users', data);
+        // io.emit('receive-connected-users', data);
     });
     
     socket.on('join-initial-chats', data => {
