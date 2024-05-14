@@ -22,7 +22,9 @@ io.on("connection", socket => {
     
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
-
+    
+    console.log("Connection: ")
+    console.log(socket)
     socket.broadcast.emit('receive-connected-users', data);
 
     // io.emit('receive-connected-users', data);
@@ -44,6 +46,9 @@ io.on("connection", socket => {
         connectedUsers.delete(disconnectedUserId); // Usuwamy go ze zbioru podłączonych użytkowników
         const data = JSON.stringify(Array.from(connectedUsers));
         console.log("Użytkownik " + disconnectedUserId + " został wylogowany.");
+        
+        console.log("Disconnect: ")
+        console.log(socket)
 
         socket.broadcast.emit('receive-connected-users', data);
         
