@@ -22,7 +22,8 @@ io.on("connection", socket => {
     
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
-    
+
+    console.log(socket.id)
     socket.broadcast.emit('receive-connected-users', data);
 
     // io.emit('receive-connected-users', data);
