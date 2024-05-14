@@ -28,10 +28,17 @@ io.on("connection", socket => {
         rooms.forEach((room) => {
             socket.leave(room);
         });
-        connectedUsers.delete(userId);
+
+        const disconnectedUserId = userId; // Zachowujemy identyfikator użytkownika, który się wylogował
+        connectedUsers.delete(disconnectedUserId); // Usuwamy go ze zbioru podłączonych użytkowników
         const data = JSON.stringify(Array.from(connectedUsers));
-        console.log("Użytkownik " + userId + " został wylogowany.");
-        io.emit('receive-connected-users', data);
+        console.log("Użytkownik " + disconnectedUserId + " został wylogowany.");
+
+        connectedUsers.forEach(user => {
+            if (user !== disconnectedUserId) {
+                io.to(user).emit('receive-connected-users', data);
+            }
+        });
     });
     
     socket.on('join-initial-chats', data => {
