@@ -23,7 +23,10 @@ io.on("connection", socket => {
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
-    io.emit('receive-connected-users', data);
+    socket.broadcast.emit('receive-connected-users', data);
+
+    // io.emit('receive-connected-users', data);
+    
     // connectedUsers.forEach(user => {
     //     console.log(userId)
     //     if (user !== userId) {
@@ -42,7 +45,10 @@ io.on("connection", socket => {
         const data = JSON.stringify(Array.from(connectedUsers));
         console.log("Użytkownik " + disconnectedUserId + " został wylogowany.");
 
-        io.emit('receive-connected-users', data);
+        socket.broadcast.emit('receive-connected-users', data);
+        
+        // io.emit('receive-connected-users', data);
+        
         // connectedUsers.forEach(user => {
         //     if (user !== disconnectedUserId) {
         //         io.to(user).emit('receive-connected-users', data);
