@@ -24,6 +24,7 @@ io.on("connection", socket => {
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
     connectedUsers.forEach(user => {
+        console.log(userId)
         if (user !== userId) {
             io.to(user).emit('receive-connected-users', data);
         }
