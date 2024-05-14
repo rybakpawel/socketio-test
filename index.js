@@ -23,12 +23,13 @@ io.on("connection", socket => {
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
-    connectedUsers.forEach(user => {
-        console.log(userId)
-        if (user !== userId) {
-            io.to(user).emit('receive-connected-users', data);
-        }
-    });
+    io.emit('receive-connected-users', data);
+    // connectedUsers.forEach(user => {
+    //     console.log(userId)
+    //     if (user !== userId) {
+    //         io.to(user).emit('receive-connected-users', data);
+    //     }
+    // });
     
     socket.on('disconnect', () => {
         const rooms = Object.keys(socket.rooms);
@@ -41,11 +42,12 @@ io.on("connection", socket => {
         const data = JSON.stringify(Array.from(connectedUsers));
         console.log("Użytkownik " + disconnectedUserId + " został wylogowany.");
 
-        connectedUsers.forEach(user => {
-            if (user !== disconnectedUserId) {
-                io.to(user).emit('receive-connected-users', data);
-            }
-        });
+        io.emit('receive-connected-users', data);
+        // connectedUsers.forEach(user => {
+        //     if (user !== disconnectedUserId) {
+        //         io.to(user).emit('receive-connected-users', data);
+        //     }
+        // });
     });
     
     socket.on('join-initial-chats', data => {
