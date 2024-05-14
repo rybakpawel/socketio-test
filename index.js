@@ -13,6 +13,11 @@ server.listen(port, () => {
     console.log("Server listening at port ", port);
 });
 
+const getAllSockets = async () => {
+    const sockets = await io.fetchSockets();
+    console.log(sockets)
+}
+
 const connectedUsers = new Set();
 
 io.on("connection", socket => {
@@ -22,7 +27,9 @@ io.on("connection", socket => {
     
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
-    console.log(connectedUsers)
+
+    getAllSockets();
+    
     socket.broadcast.emit('receive-connected-users', data);
     // io.emit('receive-connected-users', data);
     
