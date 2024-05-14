@@ -19,9 +19,15 @@ io.on("connection", socket => {
     const userId = socket.handshake.query['userId'];
     connectedUsers.add(userId);
     const data = JSON.stringify(Array.from(connectedUsers));
+    
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
-    io.emit('receive-connected-users', data);
+
+    connectedUsers.forEach(user => {
+        if (user !== userId) {
+            io.to(user).emit('receive-connected-users', data);
+        }
+    });
     
     socket.on('disconnect', () => {
         const rooms = Object.keys(socket.rooms);
@@ -36,7 +42,6 @@ io.on("connection", socket => {
 
         connectedUsers.forEach(user => {
             if (user !== disconnectedUserId) {
-                console.log(user);
                 io.to(user).emit('receive-connected-users', data);
             }
         });
