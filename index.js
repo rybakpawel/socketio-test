@@ -36,6 +36,7 @@ io.on("connection", socket => {
 
         connectedUsers.forEach(user => {
             if (user !== disconnectedUserId) {
+                console.log(user);
                 io.to(user).emit('receive-connected-users', data);
             }
         });
