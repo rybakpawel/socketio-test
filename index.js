@@ -32,7 +32,7 @@ io.on("connection", socket => {
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
-    closeSockets(userId);
+    // closeSockets(userId);
     
     socket.broadcast.emit('receive-connected-users', data);
     // io.emit('receive-connected-users', data);
