@@ -23,7 +23,8 @@ const closeSockets = async (userId, socketId) => {
             socket.disconnect();
         }
     })
-    console.log(sockets.length)
+    const sockets2 = await io.fetchSockets();
+    console.log(sockets2.length)
 }
 
 const connectedUsers = new Set();
