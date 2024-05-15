@@ -29,7 +29,7 @@ io.on("connection", socket => {
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
     getAllSockets();
-    
+    console.log(socket.handshake.query.userId)
     socket.broadcast.emit('receive-connected-users', data);
     // io.emit('receive-connected-users', data);
     
