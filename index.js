@@ -23,8 +23,8 @@ const closeSockets = async (userId, socketId) => {
             socket.disconnect();
         }
     })
-    const sockets2 = await io.fetchSockets();
-    console.log(sockets2.length)
+
+    io.emit('receive-connected-users', data);
 }
 
 const connectedUsers = new Set();
@@ -40,7 +40,7 @@ io.on("connection", socket => {
     closeSockets(userId, socket.id);
     console.log("Po close sockets");
     // socket.broadcast.emit('receive-connected-users', data);
-    io.emit('receive-connected-users', data);
+    // io.emit('receive-connected-users', data);
     
     socket.on('disconnect', () => {
         const rooms = Object.keys(socket.rooms);
