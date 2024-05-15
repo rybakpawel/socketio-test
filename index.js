@@ -16,23 +16,23 @@ server.listen(port, () => {
 const closeSockets = async (userId, socketId) => {
     const sockets = await io.fetchSockets();
     console.log(sockets.length)
-    await Promise.all(sockets.map(async (socket) => {
-        if (socket.handshake.query.userId === userId && socket.id !== socketId) {
-            await new Promise(resolve => socket.disconnect(resolve));
-        }
-    }));
-    // sockets.forEach((socket) => {
-    //     console.log("W forEach. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
+    // await Promise.all(sockets.map(async (socket) => {
     //     if (socket.handshake.query.userId === userId && socket.id !== socketId) {
-    //         console.log("W disconnect. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
-    //         socket.disconnect();
+    //         await new Promise(resolve => socket.disconnect(resolve));
     //     }
-    // })
+    // }));
+    sockets.forEach((socket) => {
+        console.log("W forEach. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
+        if (socket.handshake.query.userId === userId && socket.id !== socketId) {
+            console.log("W disconnect. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
+            socket.disconnect();
+        }
+    })
 }
 
 const connectedUsers = new Set();
 
-io.on("connection", socket => {
+io.on("connection", async (socket) => {
     const userId = socket.handshake.query['userId'];
     connectedUsers.add(userId);
     const data = JSON.stringify(Array.from(connectedUsers));
@@ -40,10 +40,10 @@ io.on("connection", socket => {
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
-    closeSockets(userId, socket.id);
+    await closeSockets(userId, socket.id);
     console.log("Po close sockets");
     // socket.broadcast.emit('receive-connected-users', data);
-    // io.emit('receive-connected-users', data);
+    io.emit('receive-connected-users', data);
     
     socket.on('disconnect', () => {
         const rooms = Object.keys(socket.rooms);
