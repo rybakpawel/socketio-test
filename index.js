@@ -16,15 +16,18 @@ server.listen(port, () => {
 const closeSockets = async (userId, socketId) => {
     const sockets = await io.fetchSockets();
     console.log(sockets.length)
-    sockets.forEach((socket) => {
-        console.log("W forEach. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
+    await Promise.all(sockets.map(async (socket) => {
         if (socket.handshake.query.userId === userId && socket.id !== socketId) {
-            console.log("W disconnect. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
-            socket.disconnect();
+            await new Promise(resolve => socket.disconnect(resolve));
         }
-    })
-
-    // io.emit('receive-connected-users', data);
+    }));
+    // sockets.forEach((socket) => {
+    //     console.log("W forEach. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
+    //     if (socket.handshake.query.userId === userId && socket.id !== socketId) {
+    //         console.log("W disconnect. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
+    //         socket.disconnect();
+    //     }
+    // })
 }
 
 const connectedUsers = new Set();
