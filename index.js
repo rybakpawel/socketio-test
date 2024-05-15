@@ -13,9 +13,13 @@ server.listen(port, () => {
     console.log("Server listening at port ", port);
 });
 
-const getAllSockets = async () => {
+const closeSockets = async (userId) => {
     const sockets = await io.fetchSockets();
-    console.log(sockets[0])
+    sockets.forEach((socket) => {
+        if (socket.handshake.query.userId === userId) {
+            socket.disconnect();
+        }
+    })
 }
 
 const connectedUsers = new Set();
@@ -28,8 +32,8 @@ io.on("connection", socket => {
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
-    // getAllSockets();
-    console.log(socket.handshake.query.userId)
+    closeSockets(userId);
+    
     socket.broadcast.emit('receive-connected-users', data);
     // io.emit('receive-connected-users', data);
     
