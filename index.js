@@ -15,7 +15,6 @@ server.listen(port, () => {
 
 const closeSockets = async (userId, socketId) => {
     const sockets = await io.fetchSockets();
-    console.log(sockets.length)
 
     sockets.forEach((socket) => {
         if (socket.handshake.query.userId === userId && socket.id !== socketId) {
