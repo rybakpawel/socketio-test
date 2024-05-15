@@ -24,7 +24,7 @@ const closeSockets = async (userId, socketId) => {
         }
     })
 
-    io.emit('receive-connected-users', data);
+    // io.emit('receive-connected-users', data);
 }
 
 const connectedUsers = new Set();
