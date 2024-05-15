@@ -17,7 +17,7 @@ const closeSockets = async (userId, socketId) => {
     const sockets = await io.fetchSockets();
     console.log(sockets.length)
     sockets.forEach((socket) => {
-        console.log("W disconnect. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
+        console.log("W forEach. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
         if (socket.handshake.query.userId === userId && socket.id !== socketId) {
             console.log("W disconnect. UserId: " + userId + ". SocketId: " + socketId + ". socket.id: " + socket.id + ".")
             socket.disconnect();
