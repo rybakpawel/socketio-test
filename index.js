@@ -13,10 +13,11 @@ server.listen(port, () => {
     console.log("Server listening at port ", port);
 });
 
-const closeSockets = async (userId) => {
+const closeSockets = async (userId, socketId) => {
     const sockets = await io.fetchSockets();
+
     sockets.forEach((socket) => {
-        if (socket.handshake.query.userId === userId) {
+        if (socket.handshake.query.userId === userId && socket.id !== socketId) {
             socket.disconnect();
         }
     })
@@ -32,7 +33,7 @@ io.on("connection", socket => {
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
-    // closeSockets(userId);
+    closeSockets(userId, socket.id);
     
     socket.broadcast.emit('receive-connected-users', data);
     // io.emit('receive-connected-users', data);
