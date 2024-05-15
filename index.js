@@ -15,7 +15,7 @@ server.listen(port, () => {
 
 const getAllSockets = async () => {
     const sockets = await io.fetchSockets();
-    console.log(sockets.length)
+    console.log(sockets[0])
 }
 
 const connectedUsers = new Set();
