@@ -28,7 +28,7 @@ io.on("connection", socket => {
     console.log("Użytkownik " + userId + " został zalogowany.");
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
-    getAllSockets();
+    // getAllSockets();
     console.log(socket.handshake.query.userId)
     socket.broadcast.emit('receive-connected-users', data);
     // io.emit('receive-connected-users', data);
