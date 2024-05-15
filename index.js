@@ -15,9 +15,10 @@ server.listen(port, () => {
 
 const closeSockets = async (userId, socketId) => {
     const sockets = await io.fetchSockets();
-
+    console.log("Przed disconnect. UserId: " + userId + ". SocketId: " + socketId + ".")
     sockets.forEach((socket) => {
         if (socket.handshake.query.userId === userId && socket.id !== socketId) {
+            console.log("W disconnect. UserId: " + userId + ". SocketId: " + socketId + ".")
             socket.disconnect();
         }
     })
