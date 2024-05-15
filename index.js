@@ -37,8 +37,8 @@ io.on("connection", socket => {
 
     closeSockets(userId, socket.id);
     
-    socket.broadcast.emit('receive-connected-users', data);
-    // io.emit('receive-connected-users', data);
+    // socket.broadcast.emit('receive-connected-users', data);
+    io.emit('receive-connected-users', data);
     
     socket.on('disconnect', () => {
         const rooms = Object.keys(socket.rooms);
@@ -51,8 +51,8 @@ io.on("connection", socket => {
         
         console.log("Użytkownik " + userId + " został wylogowany.");
 
-        socket.broadcast.emit('receive-connected-users', data);
-        // io.emit('receive-connected-users', data);
+        // socket.broadcast.emit('receive-connected-users', data);
+        io.emit('receive-connected-users', data);
     });
     
     socket.on('join-initial-chats', data => {
