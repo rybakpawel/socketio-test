@@ -38,7 +38,7 @@ io.on("connection", socket => {
     console.log("Zalogowani użytkownicy: " + Array.from(connectedUsers));
 
     closeSockets(userId, socket.id);
-    
+    console.log("Po close sockets");
     // socket.broadcast.emit('receive-connected-users', data);
     io.emit('receive-connected-users', data);
     
